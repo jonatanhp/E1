@@ -60,23 +60,25 @@ public class MainActivity extends AppCompatActivity {
             @Override // Un toque sencillo
             public void onClick(View view, int position) {
                 // Pasar a la actividad EditarContactoActivity.java
-                Contacto mascotaSeleccionada = listaDeContactos.get(position);
+                Contacto contactoSeleccionada = listaDeContactos.get(position);
                 Intent intent = new Intent(MainActivity.this, EditarContactoActivity.class);
-                intent.putExtra("idContacto", mascotaSeleccionada.getId());
-                intent.putExtra("nombreContacto", mascotaSeleccionada.getNombre());
-                intent.putExtra("edadContacto", mascotaSeleccionada.getEdad());
+                intent.putExtra("idContacto", contactoSeleccionada.getId());
+                intent.putExtra("nombreContacto", contactoSeleccionada.getNombre());
+                intent.putExtra("apellidoContacto", contactoSeleccionada.getApellido());
+                intent.putExtra("telefonoContacto", contactoSeleccionada.getTelefono());
+                intent.putExtra("emailContacto", contactoSeleccionada.getEmail());
                 startActivity(intent);
             }
 
             @Override // Un toque largo
             public void onLongClick(View view, int position) {
-                final Contacto mascotaParaEliminar = listaDeContactos.get(position);
+                final Contacto contactoParaEliminar = listaDeContactos.get(position);
                 AlertDialog dialog = new AlertDialog
                         .Builder(MainActivity.this)
                         .setPositiveButton("Sí, eliminar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                contactosController.eliminarContacto(mascotaParaEliminar);
+                                contactosController.eliminarContacto(contactoParaEliminar);
                                 refrescarListaDeContactos();
                             }
                         })
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         })
                         .setTitle("Confirmar")
-                        .setMessage("¿Eliminar a la mascota " + mascotaParaEliminar.getNombre() + "?")
+                        .setMessage("¿Eliminar a la contacto " + contactoParaEliminar.getNombre() + "?")
                         .create();
                 dialog.show();
 
