@@ -32,20 +32,46 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/etEditarEdad"
+        android:id="@+id/etEditarApellido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Edad"
-        android:inputType="number"
+        android:hint="Apellido"
+        android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEditarNombre" />
 
+    <EditText
+        android:id="@+id/etEditarTelefono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Telefono"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etEditarApellido" />
+
+    <EditText
+        android:id="@+id/etEditarEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etEditarTelefono" />
+
     <Button
-        android:id="@+id/btnGuardarCambiosMascota"
+        android:id="@+id/btnGuardarCambiosContacto"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="112dp"
         android:layout_height="wrap_content"
@@ -54,10 +80,10 @@
         android:layout_marginRight="200dp"
         android:text="Guardar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEditarEdad" />
+        app:layout_constraintTop_toBottomOf="@+id/etEditarEmail" />
 
     <Button
-        android:id="@+id/btnCancelarEdicionMascota"
+        android:id="@+id/btnCancelarEdicionContacto"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,5 +96,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.64"
         app:layout_constraintStart_toEndOf="@+id/btnGuardarCambiosMascota"
-        app:layout_constraintTop_toBottomOf="@+id/etEditarEdad" />
+        app:layout_constraintTop_toBottomOf="@+id/etEditarEmail" />
 </android.support.constraint.ConstraintLayout>
