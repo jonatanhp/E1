@@ -7,19 +7,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import me.parzibyte.crudsqlite.controllers.MascotasController;
-import me.parzibyte.crudsqlite.modelos.Mascota;
+import me.parzibyte.crudsqlite.controllers.ContactosController;
+import me.parzibyte.crudsqlite.modelos.Contacto;
 
-public class EditarMascotaActivity extends AppCompatActivity {
+public class EditarContactoActivity extends AppCompatActivity {
     private EditText etEditarNombre, etEditarEdad;
     private Button btnGuardarCambios, btnCancelarEdicion;
-    private Mascota mascota;//La mascota que vamos a estar editando
-    private MascotasController mascotasController;
+    private Contacto contactos;//La contactos que vamos a estar editando
+    private ContactosController contactossController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_editar_mascota);
+        setContentView(R.layout.activity_editar_contactos);
 
         // Recuperar datos que enviaron
         Bundle extras = getIntent().getExtras();
@@ -28,27 +28,27 @@ public class EditarMascotaActivity extends AppCompatActivity {
             finish();
             return;
         }
-        // Instanciar el controlador de las mascotas
-        mascotasController = new MascotasController(EditarMascotaActivity.this);
+        // Instanciar el controlador de las contactoss
+        contactossController = new ContactosController(EditarContactoActivity.this);
 
-        // Rearmar la mascota
-        // Nota: igualmente solamente podríamos mandar el id y recuperar la mascota de la BD
-        long idMascota = extras.getLong("idMascota");
-        String nombreMascota = extras.getString("nombreMascota");
-        int edadMascota = extras.getInt("edadMascota");
-        mascota = new Mascota(nombreMascota, edadMascota, idMascota);
+        // Rearmar la contactos
+        // Nota: igualmente solamente podríamos mandar el id y recuperar la contactos de la BD
+        long idContacto = extras.getLong("idContacto");
+        String nombreContacto = extras.getString("nombreContacto");
+        int edadContacto = extras.getInt("edadContacto");
+        contactos = new Contacto(nombreContacto, edadContacto, idContacto);
 
 
         // Ahora declaramos las vistas
         etEditarEdad = findViewById(R.id.etEditarEdad);
         etEditarNombre = findViewById(R.id.etEditarNombre);
-        btnCancelarEdicion = findViewById(R.id.btnCancelarEdicionMascota);
-        btnGuardarCambios = findViewById(R.id.btnGuardarCambiosMascota);
+        btnCancelarEdicion = findViewById(R.id.btnCancelarEdicionContacto);
+        btnGuardarCambios = findViewById(R.id.btnGuardarCambiosContacto);
 
 
-        // Rellenar los EditText con los datos de la mascota
-        etEditarEdad.setText(String.valueOf(mascota.getEdad()));
-        etEditarNombre.setText(mascota.getNombre());
+        // Rellenar los EditText con los datos de la contactos
+        etEditarEdad.setText(String.valueOf(contactos.getEdad()));
+        etEditarNombre.setText(contactos.getNombre());
 
         // Listener del click del botón para salir, simplemente cierra la actividad
         btnCancelarEdicion.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +65,7 @@ public class EditarMascotaActivity extends AppCompatActivity {
                 // Remover previos errores si existen
                 etEditarNombre.setError(null);
                 etEditarEdad.setError(null);
-                // Crear la mascota con los nuevos cambios pero ponerle
+                // Crear la contactos con los nuevos cambios pero ponerle
                 // el id de la anterior
                 String nuevoNombre = etEditarNombre.getText().toString();
                 String posibleNuevaEdad = etEditarEdad.getText().toString();
@@ -89,11 +89,11 @@ public class EditarMascotaActivity extends AppCompatActivity {
                     return;
                 }
                 // Si llegamos hasta aquí es porque los datos ya están validados
-                Mascota mascotaConNuevosCambios = new Mascota(nuevoNombre, nuevaEdad, mascota.getId());
-                int filasModificadas = mascotasController.guardarCambios(mascotaConNuevosCambios);
+                Contacto contactosConNuevosCambios = new Contacto(nuevoNombre, nuevaEdad, contactos.getId());
+                int filasModificadas = contactossController.guardarCambios(contactosConNuevosCambios);
                 if (filasModificadas != 1) {
                     // De alguna forma ocurrió un error porque se debió modificar únicamente una fila
-                    Toast.makeText(EditarMascotaActivity.this, "Error guardando cambios. Intente de nuevo.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditarContactoActivity.this, "Error guardando cambios. Intente de nuevo.", Toast.LENGTH_SHORT).show();
                 } else {
                     // Si las cosas van bien, volvemos a la principal
                     // cerrando esta actividad

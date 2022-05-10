@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class AyudanteBaseDeDatos extends SQLiteOpenHelper {
-    private static final String NOMBRE_BASE_DE_DATOS = "mascotas",
-            NOMBRE_TABLA_MASCOTAS = "mascotas";
+    private static final String NOMBRE_BASE_DE_DATOS = "contactos",
+            NOMBRE_TABLA_CONTACTOS = "contactos";
     private static final int VERSION_BASE_DE_DATOS = 1;
 
     public AyudanteBaseDeDatos(Context context) {
@@ -15,7 +15,7 @@ public class AyudanteBaseDeDatos extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(String.format("CREATE TABLE IF NOT EXISTS %s(id integer primary key autoincrement, nombre text, edad int)", NOMBRE_TABLA_MASCOTAS));
+        db.execSQL(String.format("CREATE TABLE IF NOT EXISTS %s(id integer primary key autoincrement, nombre text, apellido text, telefono text, email text)", NOMBRE_TABLA_CONTACTOS));
     }
 
     @Override
