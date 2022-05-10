@@ -15,15 +15,15 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.parzibyte.crudsqlite.controllers.MascotasController;
-import me.parzibyte.crudsqlite.modelos.Mascota;
+import me.parzibyte.crudsqlite.controllers.ContactosController;
+import me.parzibyte.crudsqlite.modelos.Contacto;
 
 public class MainActivity extends AppCompatActivity {
-    private List<Mascota> listaDeMascotas;
+    private List<Contacto> listaDeContactos;
     private RecyclerView recyclerView;
-    private AdaptadorMascotas adaptadorMascotas;
-    private MascotasController mascotasController;
-    private FloatingActionButton fabAgregarMascota;
+    private AdaptadorContactos adaptadorContactos;
+    private ContactosController contactosController;
+    private FloatingActionButton fabAgregarContacto;
 
 
     @Override
@@ -36,48 +36,48 @@ public class MainActivity extends AppCompatActivity {
 
         // Lo siguiente sí es nuestro ;)
         // Definir nuestro controlador
-        mascotasController = new MascotasController(MainActivity.this);
+        contactosController = new ContactosController(MainActivity.this);
 
         // Instanciar vistas
-        recyclerView = findViewById(R.id.recyclerViewMascotas);
-        fabAgregarMascota = findViewById(R.id.fabAgregarMascota);
+        recyclerView = findViewById(R.id.recyclerViewContactos);
+        fabAgregarContacto = findViewById(R.id.fabAgregarContacto);
 
 
         // Por defecto es una lista vacía,
         // se la ponemos al adaptador y configuramos el recyclerView
-        listaDeMascotas = new ArrayList<>();
-        adaptadorMascotas = new AdaptadorMascotas(listaDeMascotas);
+        listaDeContactos = new ArrayList<>();
+        adaptadorContactos = new AdaptadorContactos(listaDeContactos);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adaptadorMascotas);
+        recyclerView.setAdapter(adaptadorContactos);
 
         // Una vez que ya configuramos el RecyclerView le ponemos los datos de la BD
-        refrescarListaDeMascotas();
+        refrescarListaDeContactos();
 
         // Listener de los clicks en la lista, o sea el RecyclerView
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override // Un toque sencillo
             public void onClick(View view, int position) {
-                // Pasar a la actividad EditarMascotaActivity.java
-                Mascota mascotaSeleccionada = listaDeMascotas.get(position);
-                Intent intent = new Intent(MainActivity.this, EditarMascotaActivity.class);
-                intent.putExtra("idMascota", mascotaSeleccionada.getId());
-                intent.putExtra("nombreMascota", mascotaSeleccionada.getNombre());
-                intent.putExtra("edadMascota", mascotaSeleccionada.getEdad());
+                // Pasar a la actividad EditarContactoActivity.java
+                Contacto mascotaSeleccionada = listaDeContactos.get(position);
+                Intent intent = new Intent(MainActivity.this, EditarContactoActivity.class);
+                intent.putExtra("idContacto", mascotaSeleccionada.getId());
+                intent.putExtra("nombreContacto", mascotaSeleccionada.getNombre());
+                intent.putExtra("edadContacto", mascotaSeleccionada.getEdad());
                 startActivity(intent);
             }
 
             @Override // Un toque largo
             public void onLongClick(View view, int position) {
-                final Mascota mascotaParaEliminar = listaDeMascotas.get(position);
+                final Contacto mascotaParaEliminar = listaDeContactos.get(position);
                 AlertDialog dialog = new AlertDialog
                         .Builder(MainActivity.this)
                         .setPositiveButton("Sí, eliminar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                mascotasController.eliminarMascota(mascotaParaEliminar);
-                                refrescarListaDeMascotas();
+                                contactosController.eliminarContacto(mascotaParaEliminar);
+                                refrescarListaDeContactos();
                             }
                         })
                         .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -95,17 +95,17 @@ public class MainActivity extends AppCompatActivity {
         }));
 
         // Listener del FAB
-        fabAgregarMascota.setOnClickListener(new View.OnClickListener() {
+        fabAgregarContacto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Simplemente cambiamos de actividad
-                Intent intent = new Intent(MainActivity.this, AgregarMascotaActivity.class);
+                Intent intent = new Intent(MainActivity.this, AgregarContactoActivity.class);
                 startActivity(intent);
             }
         });
 
         // Créditos
-        fabAgregarMascota.setOnLongClickListener(new View.OnLongClickListener() {
+        fabAgregarContacto.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 new AlertDialog.Builder(MainActivity.this)
@@ -135,10 +135,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        refrescarListaDeMascotas();
+        refrescarListaDeContactos();
     }
 
-    public void refrescarListaDeMascotas() {
+    public void refrescarListaDeContactos() {
         /*
          * ==========
          * Justo aquí obtenemos la lista de la BD
@@ -146,9 +146,9 @@ public class MainActivity extends AppCompatActivity {
          * ============
          *
          * */
-        if (adaptadorMascotas == null) return;
-        listaDeMascotas = mascotasController.obtenerMascotas();
-        adaptadorMascotas.setListaDeMascotas(listaDeMascotas);
-        adaptadorMascotas.notifyDataSetChanged();
+        if (adaptadorContactos == null) return;
+        listaDeContactos = contactosController.obtenerContactos();
+        adaptadorContactos.setListaDeContactos(listaDeContactos);
+        adaptadorContactos.notifyDataSetChanged();
     }
 }
